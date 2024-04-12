@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Page Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
-
+    <script>
+        fetch("./signal.0.1.0.min.js").then(a => a.text())
+        .then(a => {
+            eval(a);
+            const counter = new signal.Signal.State(0);
+            const isEven = new signal.Signal.Computed(() => (counter.get() & 1) == 0);
+            const parity = new signal.Signal.Computed(() => isEven.get() ? "even" : "odd");
+        
+    
+            setInterval(() => counter.set(counter.get() + 1), 1000); // Changes the counter every 1000ms.
+            setInterval(() => {
+                console.log(isEven.get());
+            }, 1000)
+        });
+    </script>
 </body>
 </html>
